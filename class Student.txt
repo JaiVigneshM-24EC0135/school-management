@@ -1,0 +1,81 @@
+class Student:
+    def __init__(self, student_id, name):
+        self.student_id = student_id
+        self.name = name
+        self.grades = []
+
+    def add_grade(self, grade):
+        self.grades.append(grade)
+
+    def get_average_grade(self):
+        if not self.grades:
+            return 0
+        return sum(self.grades) / len(self.grades)
+
+    def __str__(self):
+        return f'Student ID: {self.student_id}, Name: {self.name}, Average Grade: {self.get_average_grade():.2f}'
+
+
+class SchoolManagementSystem:
+    def __init__(self):
+        self.students = {}
+
+    def add_student(self, student_id, name):
+        if student_id in self.students:
+            print("Student ID already exists.")
+        else:
+            self.students[student_id] = Student(student_id, name)
+            print(f'Student {name} added successfully.')
+
+    def add_grade(self, student_id, grade):
+        if student_id in self.students:
+            self.students[student_id].add_grade(grade)
+            print(f'Grade {grade} added for student {student_id}.')
+        else:
+            print("Student ID not found.")
+
+    def view_student(self, student_id):
+        if student_id in self.students:
+            print(self.students[student_id])
+        else:
+            print("Student ID not found.")
+
+    def list_students(self):
+        for student in self.students.values():
+            print(student)
+
+
+def main():
+    sms = SchoolManagementSystem()
+
+    while True:
+        print("\nSchool Management System")
+        print("1. Add Student")
+        print("2. Add Grade")
+        print("3. View Student")
+        print("4. List All Students")
+        print("5. Exit")
+        
+        choice = input("Choose an option: ")
+
+        if choice == '1':
+            student_id = input("Enter Student ID: ")
+            name = input("Enter Student Name: ")
+            sms.add_student(student_id, name)
+        elif choice == '2':
+            student_id = input("Enter Student ID: ")
+            grade = float(input("Enter Grade: "))
+            sms.add_grade(student_id, grade)
+        elif choice == '3':
+            student_id = input("Enter Student ID: ")
+            sms.view_student(student_id)
+        elif choice == '4':
+            sms.list_students()
+        elif choice == '5':
+            print("Exiting the system.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
